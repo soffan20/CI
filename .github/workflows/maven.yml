@@ -1,0 +1,39 @@
+name: Continuous Integration
+
+on: [push, pull_request]
+
+jobs:
+  pipeline:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Set up JDK 13
+      uses: actions/setup-java@v1
+      with:
+        java-version: 13
+
+    - run: mvn -q test
+    - run: mvn -q package
+    - run: mvn -q javadoc:javadoc
+
+    - name: Prepare deploy
+      if: github.ref == 'refs/head/master'
+      run: |
+        git config --global user.email "actions@github"
+        git config --global user.name "Github Actions"
+        mv target/site/apidocs /tmp/
+        git checkout gh-pages
+        rm -rf docs
+        mv /tmp/apidocs docs
+        git add docs
+        git commit -m "CI: $(git log HEAD --no-decorate --oneline -1 --abbrev-commit)"
+
+    - name: Deploy
+      if: github.ref == 'refs/head/master' && success()
+      uses: ad-m/github-push-action@master
+      with:
+        github_token: ${{ secrets.AUTH_TOKEN }}
+        branch: gh-pages
