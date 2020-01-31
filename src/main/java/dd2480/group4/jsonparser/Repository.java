@@ -1,4 +1,4 @@
-package src.main.java.dd2480.group4.jsonparser;
+package dd2480.group4.jsonparser;
 
 import java.util.HashMap;
 import java.util.Map;

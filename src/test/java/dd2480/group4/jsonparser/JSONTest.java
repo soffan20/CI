@@ -1,4 +1,4 @@
-package src.test.java.dd2480.group4.jsonparser;
+package dd2480.group4.jsonparser;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -73,6 +73,6 @@ public class JSONTest {
         Integer ourNewId = repository.getId();
 
         // THEN
-        assertNotEquals(123456789, ourId, "Testing that id is incorrect");
+        assertNotEquals(123456789, ourNewId, "Testing that id is incorrect");
     }
 }
