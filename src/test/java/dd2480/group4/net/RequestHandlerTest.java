@@ -27,9 +27,9 @@ class RequestHandlerTest {
             }
         };
         var server = newServer(executor);
-        var http = httpPost(server, "foo");
+        var http = httpPost(server, "{\"git_url\": \"url\", \"pusher\" : {\"name\": \"foo\", \"email\": \"bar\"}, \"after\": \"commithash\"}");
         assertEquals(http.getResponseCode(), HttpStatus.OK_200, "response code should be OK");
-        assertEquals("foo", executor.request.json, "Excepted json to be set to POST data");
+        assertEquals("foo", executor.request.pusher.name, "Expected json name to be set to foo");
 
         server.stop();
     }
