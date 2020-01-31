@@ -18,6 +18,11 @@ $ mvn test
 $ mvn package
 ```
 
+## Running the server
+```bash
+# Running the server
+$ mvn compile exec:java
+```
 ## Generating the documentation
 
 ```bash
