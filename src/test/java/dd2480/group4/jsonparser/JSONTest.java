@@ -3,10 +3,6 @@ package dd2480.group4.jsonparser;
 import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.Test;
-import src.main.java.dd2480.group4.jsonparser.Owner;
-import src.main.java.dd2480.group4.jsonparser.Push;
-import src.main.java.dd2480.group4.jsonparser.Repository;
-
 
 public class JSONTest {
 
