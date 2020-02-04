@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Test;
 import java.io.IOException;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.fail;
 
 class BuildRequestTest {
 
@@ -23,6 +24,22 @@ class BuildRequestTest {
         assertEquals("commithash", buildRequest.hashId, "hashId should be commithash");
         assertEquals("url", buildRequest.url, "url should be url");
 
+
+    }
+
+
+    @Test
+    void ignorePropertiesJson() throws IOException {
+
+        //GIVEN
+        String json = "{\"car\": \"volvo\", \"git_url\": \"url\", \"pusher\" : {\"name\": \"foo\", \"email\": \"bar\"}, \"after\": \"commithash\"}";
+
+        //WHEN
+        try {
+            var buildRequest = BuildRequest.fromJson(json);
+        }catch(Exception e){
+            fail( "Could not create object buildrequest, did not ignore properties");
+        }
 
     }
 }
