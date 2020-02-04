@@ -20,28 +20,44 @@ import java.nio.charset.StandardCharsets;
 public class RequestHandler extends AbstractHandler {
 
     Executor executor;
+    boolean async;
 
     /**
      * Constructs a request handler, responsible for handling requests from jetty.
      * The request handler listens for webhooks and starts a new build with the given Executor
+     *
+     * @param executor the Executor responsible for running the build job
+     * @param async    Specifies whether the handler runs the build executor in a separate thread
+     */
+    public RequestHandler(Executor executor, boolean async) {
+        this.executor = executor;
+        this.async = async;
+    }
+
+    /**
+     * Constructs a request handler, responsible for handling requests from jetty.
+     * The request handler listens for webhooks and starts a new build with the given Executor
+     *
      * @param executor the Executor responsible for running the build job
      */
     public RequestHandler(Executor executor) {
         this.executor = executor;
+        this.async = true;
     }
 
     /**
      * handle defines the actual handler used by jetty to respond to HTTP requests.
      * It expects the webhook JSON in the body of a HTTP request. The handler validates
      * the json, starts the build in a new thread and returns 200.
-     * @param target The target of the request - either a URI or a name.
+     *
+     * @param target      The target of the request - either a URI or a name.
      * @param baseRequest The original unwrapped request object.
-     * @param request The request either as the {@link Request} object or a wrapper of that request. The
-     * <code>{@link HttpConnection#getCurrentConnection()}.{@link HttpConnection#getHttpChannel() getHttpChannel()}.{@link HttpChannel#getRequest() getRequest()}</code>
-     * method can be used access the Request object if required.
-     * @param response The response as the {@link Response} object or a wrapper of that request. The
-     * <code>{@link HttpConnection#getCurrentConnection()}.{@link HttpConnection#getHttpChannel() getHttpChannel()}.{@link HttpChannel#getResponse() getResponse()}</code>
-     * method can be used access the Response object if required.
+     * @param request     The request either as the {@link Request} object or a wrapper of that request. The
+     *                    <code>{@link HttpConnection#getCurrentConnection()}.{@link HttpConnection#getHttpChannel() getHttpChannel()}.{@link HttpChannel#getRequest() getRequest()}</code>
+     *                    method can be used access the Request object if required.
+     * @param response    The response as the {@link Response} object or a wrapper of that request. The
+     *                    <code>{@link HttpConnection#getCurrentConnection()}.{@link HttpConnection#getHttpChannel() getHttpChannel()}.{@link HttpChannel#getResponse() getResponse()}</code>
+     *                    method can be used access the Response object if required.
      */
     @Override
     public void handle(String target,
@@ -55,7 +71,11 @@ public class RequestHandler extends AbstractHandler {
             var bytes = request.getInputStream().readAllBytes();
             var json = new String(bytes, StandardCharsets.UTF_8);
             var buildRequest = BuildRequest.fromJson(json);
-            new Thread(() -> executor.runBuild(buildRequest)).start();
+            if (async) {
+                new Thread(() -> executor.runBuild(buildRequest)).start();
+            } else {
+                executor.runBuild(buildRequest);
+            }
             response.setStatus(HttpStatus.OK_200);
         } catch (JsonEOFException e) {
             System.err.println("Error parsing json: " + e.getMessage());
