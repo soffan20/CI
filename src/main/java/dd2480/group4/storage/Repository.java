@@ -23,6 +23,10 @@ public class Repository implements RepositoryHandler{
 
         processBuilder.start();
 
+        processBuilder.command("bash", "-c", "git submodule update --init --recursive");
+
+        processBuilder.start();
+
     }
 
     public static void deleteDirectory(Path path) throws IOException {
