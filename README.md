@@ -4,6 +4,13 @@ The project is a Maven project using Java 13 and contains a jUnit test suite.
 Documentation is generated from the javadoc in the master branch and is
 published in the `gh-pages` branch in this repository.
 
+## Documentation
+Our documentation can be found at the following URL:
+https://soffan20.github.io/CI/
+
+## Status
+![Continuous Integration](https://github.com/soffan20/CI/workflows/Continuous%20Integration/badge.svg)
+
 ## Running the tests
 
 ```bash
