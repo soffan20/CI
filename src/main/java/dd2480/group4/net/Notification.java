@@ -1,6 +1,5 @@
 package dd2480.group4.net;
 
-import javax.persistence.criteria.CriteriaBuilder;
 import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.URL;
