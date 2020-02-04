@@ -28,18 +28,4 @@ class BuildRequestTest {
     }
 
 
-    @Test
-    void ignorePropertiesJson() throws IOException {
-
-        //GIVEN
-        String json = "{\"car\": \"volvo\", \"git_url\": \"url\", \"pusher\" : {\"name\": \"foo\", \"email\": \"bar\"}, \"after\": \"commithash\"}";
-
-        //WHEN
-        try {
-            var buildRequest = BuildRequest.fromJson(json);
-        }catch(Exception e){
-            fail( "Could not create object buildrequest, did not ignore properties");
-        }
-
-    }
 }
