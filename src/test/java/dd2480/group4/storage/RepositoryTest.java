@@ -17,7 +17,7 @@ public class RepositoryTest {
     void directoryTest() throws IOException {
 
         //GIVEN
-        String repo = "https://github.com/soffan20/CI.git";
+        String repo = "git@github.com:soffan20/DummyTestRepo.git";
 
         //WHEN
         var path = Repository.createDirectory(); //create directory
