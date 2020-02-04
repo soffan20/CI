@@ -16,7 +16,8 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 class RequestHandlerTest {
 
     @Test
-    public void doHandle() throws Exception {
+    public void handle() throws Exception {
+        // GIVEN
         var executor = new Executor() {
             public BuildRequest request;
 
@@ -27,17 +28,22 @@ class RequestHandlerTest {
             }
         };
         var server = newServer(executor);
-        var http = httpPost(server, "{\"git_url\": \"url\", \"pusher\" : {\"name\": \"foo\", \"email\": \"bar\"}, \"after\": \"commithash\"}");
-        assertEquals(http.getResponseCode(), HttpStatus.OK_200, "response code should be OK");
-        assertEquals("foo", executor.request.pusher.name, "Expected json name to be set to foo");
 
+        // WHEN
+        var response = httpPost(server, "{\"git_url\": \"url\", \"pusher\" : {\"name\": \"foo\", \"email\": \"bar\"}, \"after\": \"commithash\"}");
+        var invalidJson = httpPost(server, "{\"");
+
+        // THEN
+        assertEquals(HttpStatus.BAD_REQUEST_400, invalidJson.getResponseCode(), "response code should be 500 for invalid JSON");
+        assertEquals(HttpStatus.OK_200, response.getResponseCode(), "response code should be OK for valid JSON");
+        assertEquals("foo", executor.request.pusher.name, "Expected json name to be set to foo");
         server.stop();
     }
 
     private Server newServer(Executor executor) {
         var rng = ThreadLocalRandom.current();
         var port = rng.nextInt(1000) + 8000;
-        Server server = new Server(port);
+        var server = new Server(port);
         server.setHandler(new RequestHandler(executor));
         try {
             server.start();
