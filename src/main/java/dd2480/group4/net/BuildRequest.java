@@ -13,16 +13,25 @@ import java.io.IOException;
 @JsonIgnoreProperties(ignoreUnknown=true)
 public class BuildRequest {
 
-    @JsonProperty("git_url")
-    String url;
-    @JsonProperty("after")
-    String hashId;
+    @JsonProperty("repository")
+    public Repository repository;
+    @JsonProperty("before")
+    public String hashId;
     @JsonProperty("pusher")
-    Pusher pusher;
+    public Pusher pusher;
 
     public static BuildRequest fromJson(String json) throws IOException {
         var mapper = new ObjectMapper();
         return mapper.readValue(json, BuildRequest.class);
+    }
+
+    public static class Repository {
+        @JsonProperty("name")
+        String name;
+        @JsonProperty("owner")
+        Owner owner;
+        @JsonProperty("git_url")
+        String url;
     }
 
 
@@ -32,5 +41,10 @@ public class BuildRequest {
         @JsonProperty("name")
         String name;
 
+    }
+
+    public static class Owner {
+        @JsonProperty("name")
+        String name;
     }
 }

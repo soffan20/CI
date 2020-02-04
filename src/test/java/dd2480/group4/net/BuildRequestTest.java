@@ -13,7 +13,7 @@ class BuildRequestTest {
     void fromJson() throws IOException {
 
         //GIVEN
-        String json = "{\"git_url\": \"url\", \"pusher\" : {\"name\": \"foo\", \"email\": \"bar\"}, \"after\": \"commithash\"}";
+        String json = "{\"repository\" : {\"name\": \"soffan\", \"git_url\": \"url\", \"owner\" : {\"name\": \"testing\"}}, \"pusher\" : {\"name\": \"foo\", \"email\": \"bar\"}, \"before\": \"commithash\"}";
 
         //WHEN
         var buildRequest = BuildRequest.fromJson(json);
@@ -22,7 +22,9 @@ class BuildRequestTest {
         assertEquals("foo", buildRequest.pusher.name, "name should be foo");
         assertEquals("bar", buildRequest.pusher.email, "email should be bar");
         assertEquals("commithash", buildRequest.hashId, "hashId should be commithash");
-        assertEquals("url", buildRequest.url, "url should be url");
+        assertEquals("url", buildRequest.repository.url, "url should be url");
+        assertEquals("soffan", buildRequest.repository.name, "repo name should be soffan");
+        assertEquals("testing", buildRequest.repository.owner.name, "owner name should be testing");
 
 
     }
