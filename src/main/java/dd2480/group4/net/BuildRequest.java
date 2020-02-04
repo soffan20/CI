@@ -14,11 +14,11 @@ import java.io.IOException;
 public class BuildRequest {
 
     @JsonProperty("repository")
-    Repository repository;
-    @JsonProperty("after")
-    String hashId;
+    public Repository repository;
+    @JsonProperty("before")
+    public String hashId;
     @JsonProperty("pusher")
-    Pusher pusher;
+    public Pusher pusher;
 
     public static BuildRequest fromJson(String json) throws IOException {
         var mapper = new ObjectMapper();
@@ -26,8 +26,8 @@ public class BuildRequest {
     }
 
     public static class Repository {
-        @JsonProperty("id")
-        Integer id;
+        @JsonProperty("name")
+        String name;
         @JsonProperty("owner")
         Owner owner;
         @JsonProperty("git_url")
@@ -44,7 +44,7 @@ public class BuildRequest {
     }
 
     public static class Owner {
-        @JsonProperty("id")
-        Integer id;
+        @JsonProperty("name")
+        String name;
     }
 }

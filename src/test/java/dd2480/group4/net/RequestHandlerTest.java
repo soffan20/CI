@@ -28,10 +28,13 @@ class RequestHandlerTest {
             }
         };
         var server = newServer(executor);
+        var url = toUrl(server);
+        var http = Http.post(url, "{\"git_url\": \"url\", \"pusher\" : {\"name\": \"foo\", \"email\": \"bar\"}, \"after\": \"commithash\"}");
+        assertEquals(http.getResponseCode(), HttpStatus.OK_200, "response code should be OK");
 
         // WHEN
-        var response = httpPost(server, "{\"git_url\": \"url\", \"pusher\" : {\"name\": \"foo\", \"email\": \"bar\"}, \"after\": \"commithash\"}");
-        var invalidJson = httpPost(server, "{\"");
+        var response = Http.post(url, "{\"git_url\": \"url\", \"pusher\" : {\"name\": \"foo\", \"email\": \"bar\"}, \"after\": \"commithash\"}");
+        var invalidJson = Http.post(url, "{\"");
 
         // THEN
         assertEquals(HttpStatus.BAD_REQUEST_400, invalidJson.getResponseCode(), "response code should be 500 for invalid JSON");
@@ -53,19 +56,8 @@ class RequestHandlerTest {
         return server;
     }
 
-    private HttpURLConnection httpPost(Server server, String json) throws IOException {
-        byte[] data = json.getBytes();
-        HttpURLConnection http = (HttpURLConnection) new URL("http", "localhost", server.getURI().getPort(), "/").openConnection();
-        http.setDoOutput(true);
-        http.setInstanceFollowRedirects(false);
-        http.setRequestMethod("POST");
-        http.setRequestProperty("Content-Type", "application/json");
-        http.setRequestProperty("charset", "utf-8");
-        http.setRequestProperty("Content-Length", Integer.toString(data.length));
-        http.setUseCaches(false);
-        try (DataOutputStream wr = new DataOutputStream(http.getOutputStream())) {
-            wr.write(data);
-        }
-        return http;
+    private URL toUrl(Server server) throws IOException {
+        URL url = new URL("http", "localhost", server.getURI().getPort(), "/");
+        return url;
     }
 }
