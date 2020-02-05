@@ -20,15 +20,28 @@ import java.nio.charset.StandardCharsets;
 public class RequestHandler extends AbstractHandler {
 
     Executor executor;
+    boolean async;
 
     /**
      * Constructs a request handler, responsible for handling requests from jetty.
      * The request handler listens for webhooks and starts a new build with the given Executor
      *
      * @param executor the Executor responsible for running the build job
+     * @param async    Specifies whether the handler runs the build executor in a separate thread
+     */
+    public RequestHandler(Executor executor, boolean async) {
+        this.executor = executor;
+        this.async = async;
+    }
+
+    /**
+     * Constructs a request handler, responsible for handling requests from jetty.
+     * The request handler listens for webhooks and starts a new build with the given Executor
+     * @param executor the Executor responsible for running the build job
      */
     public RequestHandler(Executor executor) {
         this.executor = executor;
+        this.async = true;
     }
 
     /**
@@ -56,8 +69,12 @@ public class RequestHandler extends AbstractHandler {
         try {
             var bytes = request.getInputStream().readAllBytes();
             var json = new String(bytes, StandardCharsets.UTF_8);
-            var buildRequest = pushEvent.fromJson(json);
-            new Thread(() -> executor.runBuild(buildRequest)).start();
+            var buildRequest = BuildRequest.fromJson(json);
+            if (async) {
+                new Thread(() -> executor.runBuild(buildRequest)).start();
+            } else {
+                executor.runBuild(buildRequest);
+            }
             response.setStatus(HttpStatus.OK_200);
         } catch (JsonEOFException e) {
             System.err.println("Error parsing json: " + e.getMessage());

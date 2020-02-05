@@ -47,7 +47,7 @@ class   RequestHandlerTest {
         var rng = ThreadLocalRandom.current();
         var port = rng.nextInt(1000) + 8000;
         var server = new Server(port);
-        server.setHandler(new RequestHandler(executor));
+        server.setHandler(new RequestHandler(executor, false));
         try {
             server.start();
         } catch (Exception e) {
