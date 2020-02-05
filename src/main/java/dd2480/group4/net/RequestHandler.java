@@ -69,7 +69,7 @@ public class RequestHandler extends AbstractHandler {
         try {
             var bytes = request.getInputStream().readAllBytes();
             var json = new String(bytes, StandardCharsets.UTF_8);
-            var buildRequest = BuildRequest.fromJson(json);
+            var buildRequest = pushEvent.fromJson(json);
             if (async) {
                 new Thread(() -> executor.runBuild(buildRequest)).start();
             } else {
