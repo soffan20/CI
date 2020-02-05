@@ -68,9 +68,20 @@ public class RequestHandler extends AbstractHandler {
         try {
             var bytes = request.getInputStream().readAllBytes();
             var json = new String(bytes, StandardCharsets.UTF_8);
-            var buildRequest = pushEvent.fromJson(json);
+            var buildRequest = PushEvent.fromJson(json);
             if (async) {
-                new Thread(() -> executor.runBuild(buildRequest)).start();
+                new Thread(() ->
+                {
+                    try {
+                        executor.runBuild(buildRequest);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+                ).start();
+
             } else {
                 executor.runBuild(buildRequest);
             }
@@ -79,6 +90,8 @@ public class RequestHandler extends AbstractHandler {
             System.err.println("Error parsing json: " + e.getMessage());
             response.setStatus(HttpStatus.BAD_REQUEST_400);
         } catch (IOException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
             e.printStackTrace();
         }
     }

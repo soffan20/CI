@@ -10,11 +10,11 @@ import java.io.IOException;
  * Json classes to get information from request from GitHub
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class pushEvent {
+public class PushEvent {
 
     @JsonProperty("repository")
     public Repository repository;
-    @JsonProperty("before")
+    @JsonProperty("after")
     public String hashId;
     @JsonProperty("pusher")
     public Pusher pusher;
@@ -24,39 +24,43 @@ public class pushEvent {
      * @return a class representation of the json request.
      * @throws IOException Fails to read the JSON.
      */
-    public static pushEvent fromJson(String json) throws IOException {
+    @JsonIgnoreProperties(ignoreUnknown = true)
+    public static PushEvent fromJson(String json) throws IOException {
         var mapper = new ObjectMapper();
-        return mapper.readValue(json, pushEvent.class);
+        return mapper.readValue(json, PushEvent.class);
     }
 
     /**
      * The class represents the repository
      */
+    @JsonIgnoreProperties(ignoreUnknown = true)
     public static class Repository {
         @JsonProperty("name")
-        String name;
+        public String name;
         @JsonProperty("owner")
-        Owner owner;
+        public Owner owner;
         @JsonProperty("git_url")
-        String url;
+        public String url;
     }
 
     /**
      * The class represents the pusher of the commit.
      */
+    @JsonIgnoreProperties(ignoreUnknown = true)
     public static class Pusher {
         @JsonProperty("email")
-        String email;
+        public String email;
         @JsonProperty("name")
-        String name;
+        public String name;
 
     }
 
     /**
      * The class represents the owner of the repository.
      */
+    @JsonIgnoreProperties(ignoreUnknown = true)
     public static class Owner {
         @JsonProperty("name")
-        String name;
+        public String name;
     }
 }

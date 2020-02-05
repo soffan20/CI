@@ -17,16 +17,16 @@ public class Notification {
      * @return The Http-connection with the given URL where status and message is sent.
      * @throws IOException if it fails to send the message.
      */
-    public HttpURLConnection setStatus(pushEvent pushEvent, Status status, String statusMessage) throws IOException {
+    public HttpURLConnection setStatus(PushEvent pushEvent, Status status, String statusMessage) throws IOException {
         String repoName = pushEvent.repository.name;
         String ownerName = pushEvent.repository.owner.name;
         String hashId = pushEvent.hashId;
-        var statusEndpoint = new URL("https://api.github.com/repos/" + repoName + "/" + ownerName + "/statuses/" + hashId);
-        String jsonBody = "{\"state\": " + status + ", \"description\" : " + statusMessage + ", \"context\" :  \"soffan20/CI\"}";
+        var statusEndpoint = new URL("https://api.github.com/repos/" + ownerName + "/" + repoName + "/statuses/" + hashId);
+        String jsonBody = "{\"state\": \"" + status.toString().toLowerCase() + "\", \"description\" : \"" + statusMessage + "\", \"context\" :  \"soffan20/CI\"}";
         return Http.post(statusEndpoint, jsonBody);
     }
 
-    enum Status {
+    public enum Status {
         ERROR,
         FAILURE,
         PENDING,
