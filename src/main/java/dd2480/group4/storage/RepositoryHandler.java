@@ -21,7 +21,6 @@ public interface RepositoryHandler {
      * Clones a repository to the given path.
      * @param path the location where the repositories is cloned to.
      * @param repo the http-address to the repo to be cloned.
-     * @throws IOException if it fails to write to the location.
      */
     public static void cloneGit(Path path, String repo) {
 
