@@ -6,8 +6,9 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.concurrent.TimeUnit;
 
-public class Repository implements RepositoryHandler{
+public class Repository implements RepositoryHandler {
 
     public static Path createDirectory() throws IOException {
 
@@ -15,18 +16,17 @@ public class Repository implements RepositoryHandler{
         return Files.createTempDirectory("soffan20.ci.");
     }
 
-    public static void cloneGit(Path path, String repo) throws IOException {
+    public static void cloneGit(Path path, String repo) throws IOException, InterruptedException {
 
         ProcessBuilder processBuilder = new ProcessBuilder();
         // Cloning the directory into the created temporary directory
-        processBuilder.command("bash", "-c", "git clone "+repo+" "+path.toString());
+        processBuilder.command("bash", "-c", "git clone " + repo + " " + path.toString())
+                .start()
+                .waitFor(5, TimeUnit.SECONDS);;
 
-        processBuilder.start();
-
-        processBuilder.command("bash", "-c", "git submodule update --init --recursive");
-
-        processBuilder.start();
-
+        processBuilder.command("bash", "-c", "git submodule update --init --recursive")
+                .start()
+                .waitFor(5, TimeUnit.SECONDS);;
     }
 
     public static void deleteDirectory(Path path) throws IOException {

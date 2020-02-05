@@ -14,10 +14,10 @@ import static org.junit.jupiter.api.Assertions.*;
 public class RepositoryTest {
 
     @Test
-    void directoryTest() throws IOException {
+    void directoryTest() throws IOException, InterruptedException {
 
         //GIVEN
-        String repo = "git@github.com:soffan20/DummyTestRepo.git";
+        String repo = "https://github.com/soffan20/DummyTestRepo.git";
 
         //WHEN
         var path = Repository.createDirectory(); //create directory
@@ -27,6 +27,7 @@ public class RepositoryTest {
         //THEN
         assertTrue(Files.exists(path), "should be true if directory was created successfully");
         assertTrue(dirStream.iterator().hasNext(), "should be true if git repo was cloned successfully");
+        assertTrue(Files.exists(path.resolve("execute.sh")), "should be true if git repo was cloned successfully");
 
         //WHEN
         Repository.deleteDirectory(path);
