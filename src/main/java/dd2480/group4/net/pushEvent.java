@@ -10,7 +10,7 @@ import java.io.IOException;
  * Defines the structure of a request to build the project
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class BuildRequest {
+public class pushEvent {
 
     @JsonProperty("repository")
     public Repository repository;
@@ -24,9 +24,9 @@ public class BuildRequest {
      * @return a class representation of the json request.
      * @throws IOException
      */
-    public static BuildRequest fromJson(String json) throws IOException {
+    public static pushEvent fromJson(String json) throws IOException {
         var mapper = new ObjectMapper();
-        return mapper.readValue(json, BuildRequest.class);
+        return mapper.readValue(json, pushEvent.class);
     }
 
     /**
