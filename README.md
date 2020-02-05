@@ -36,3 +36,19 @@ $ mvn compile exec:java
 # This generates HTML from the Javadoc in target/site/apidocs
 $ mvn javadoc:javadoc
 ```
+
+## Contributions
+The whole group contributed equally. 
+
+Louise worked with JSON, the GitHub requests and updating the commit status.
+
+Daniel worked with documentation and handling server.
+
+Andreas worked with repository handling in the server.
+
+Mikael worked with the executor stitching together the whole flow and JSON.
+
+Emil worked with GitHub Actions to automate compilation, testing, documentation generation
+and automatic deployment of documentation to GitHub pages.
+
+Everyone created tests for their parts.
