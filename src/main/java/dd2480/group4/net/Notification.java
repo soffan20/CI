@@ -21,8 +21,7 @@ public class Notification {
         String repoName = buildRequest.repository.name;
         String ownerName = buildRequest.repository.owner.name;
         String hashId = buildRequest.hashId;
-        var statusEndpoint = new URL("https://api.github.com/repos/" + repoName + "/" + ownerName + "/statuses/" + hashId);
-        String jsonBody = "{\"state\": " + status + ", \"description\" : " + statusMessage + ", \"context\" :  \"soffan20/CI\"}";
+        var statusEndpoint = new URL("https://api.github.com/repos/" + ownerName + "/" + repoName + "/statuses/" + hashId);
+        String jsonBody = "{\"state\": \"" + status + "\", \"description\" : \"" + statusMessage + "\", \"context\" :  \"soffan20/CI\"}";
         return Http.post(statusEndpoint, jsonBody);
-    }
-}
+    }}

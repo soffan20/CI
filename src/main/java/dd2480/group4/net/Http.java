@@ -13,7 +13,7 @@ public class Http {
         HttpURLConnection http = (HttpURLConnection) url.openConnection();
         http.setDoOutput(true);
         http.setInstanceFollowRedirects(false);
-        String auth = "soffanbot:24755c979d0ddbadf9a2f48dba644adb09142c8f";
+        String auth = "soffanbot:a47e4ee5e7ded5b59962becd064ee30861194722";
         String basicAuth = "Basic " + new String(Base64.getEncoder().encode(auth.getBytes()));
         http.setRequestProperty ("Authorization", basicAuth);
         http.setRequestMethod("POST");
@@ -24,6 +24,13 @@ public class Http {
         try (DataOutputStream wr = new DataOutputStream(http.getOutputStream())) {
             wr.write(data);
         }
+
+        System.out.println("Notificiation status");
+        System.out.println("====================");
+        System.out.println("Url: " + url);
+        System.out.println("Status response code: " + http.getResponseCode());
+        System.out.println("Response body:\n" + http.getResponseMessage());
+        System.out.println("");
         return http;
     }
 }
