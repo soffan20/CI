@@ -24,9 +24,11 @@ public class Repository implements RepositoryHandler {
                 .start()
                 .waitFor(5, TimeUnit.SECONDS);;
 
+
         processBuilder.command("bash", "-c", "git submodule update --init --recursive")
+                .directory(path.toFile())
                 .start()
-                .waitFor(5, TimeUnit.SECONDS);;
+                .waitFor(5, TimeUnit.SECONDS);;;
     }
 
     public static void deleteDirectory(Path path) throws IOException {
