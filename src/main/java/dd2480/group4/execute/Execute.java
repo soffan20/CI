@@ -9,18 +9,29 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.concurrent.TimeUnit;
-
+/**
+ * A class for running bash script with instructions for build.
+ */
 public class Execute {
     Path path;
     int exitValue;
     String stdout;
     String stderr;
 
+    /**
+     * Constructs a Execute, responsible for execute bash script execute.sh
+     *
+     * @param path path to directory with file execute.sh
+     */
     public Execute(Path path){
         this.path = path;
     }
 
 
+    /**
+     * Check if file execute.sh exists and executes it.
+     * Reads exit value, stdout and stderr from bash script execute.sh
+     */
     public void runExecuteInstructions() throws IOException, InterruptedException {
         Path executePath = path.resolve("execute.sh");
         ProcessBuilder pb = new ProcessBuilder();
