@@ -5,8 +5,18 @@ import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
+/**
+ *
+ */
 public class Http {
 
+    /**
+     *
+     * @param url The url to send the object to
+     * @param json The json to send
+     * @return Returns a HttpURLConnection with the given URL ready to send the JSON.
+     * @throws IOException when it fails to send the message.
+     */
     public static HttpURLConnection post(URL url, String json) throws IOException {
         byte[] data = json.getBytes();
         HttpURLConnection http = (HttpURLConnection) url.openConnection();

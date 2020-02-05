@@ -11,15 +11,15 @@ import java.util.concurrent.ThreadLocalRandom;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-class RequestHandlerTest {
+class   RequestHandlerTest {
     @Test
     public void handle() throws Exception {
         // GIVEN
         var executor = new Executor() {
-            public BuildRequest request;
+            public pushEvent request;
 
             @Override
-            public void runBuild(BuildRequest req) {
+            public void runBuild(pushEvent req) {
                 this.request = req;
 
             }
