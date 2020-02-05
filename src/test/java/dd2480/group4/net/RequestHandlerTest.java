@@ -30,7 +30,7 @@ class   RequestHandlerTest {
         assertEquals(http.getResponseCode(), HttpStatus.OK_200, "response code should be OK");
 
         // WHEN
-        var response = Http.post(url, "{\"repository\": {\"git_url\": \"url\"}, \"pusher\" : {\"name\": \"foo\", \"email\": \"bar\"}, \"before\": \"commithash\"}");
+        var response = Http.post(url, "{\"repository\": {\"git_url\": \"url\"}, \"pusher\" : {\"name\": \"foo\", \"email\": \"bar\"}, \"after\": \"commithash\"}");
         var invalidJson = Http.post(url, "{\"");
 
         // THEN

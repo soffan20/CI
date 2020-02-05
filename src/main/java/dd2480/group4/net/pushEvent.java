@@ -14,7 +14,7 @@ public class pushEvent {
 
     @JsonProperty("repository")
     public Repository repository;
-    @JsonProperty("before")
+    @JsonProperty("after")
     public String hashId;
     @JsonProperty("pusher")
     public Pusher pusher;
