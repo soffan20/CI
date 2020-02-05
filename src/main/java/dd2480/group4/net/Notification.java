@@ -26,6 +26,9 @@ public class Notification {
         return Http.post(statusEndpoint, jsonBody);
     }
 
+    /**
+     * The status which is sent to github.
+     */
     enum Status {
         ERROR,
         FAILURE,

@@ -8,16 +8,27 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 
 /**
- *
+ * A class for handling cloning of repositories.
  */
 public class Repository implements RepositoryHandler{
 
+    /**
+     * Creates a temporary directory and returns the path to it.
+     * @return the path to the directory
+     * @throws IOException if it fails to create the repository
+     */
     public static Path createDirectory() throws IOException {
 
         // return temporary directory with prefix "soffan20.ci."
         return Files.createTempDirectory("soffan20.ci.");
     }
 
+    /**
+     * Clones a repository to the given path.
+     * @param path the location where the repositories is cloned to.
+     * @param repo the http-address to the repo to be cloned.
+     * @throws IOException if it fails to write to the location.
+     */
     public static void cloneGit(Path path, String repo) throws IOException {
 
         ProcessBuilder processBuilder = new ProcessBuilder();
@@ -32,6 +43,11 @@ public class Repository implements RepositoryHandler{
 
     }
 
+    /**
+     * Deletes the directory at the given path.
+     * @param path the path to the directory which is to be deleted.
+     * @throws IOException if if is not allowed to delete teh directory.
+     */
     public static void deleteDirectory(Path path) throws IOException {
         // delete the temporary directory
         FileUtils.deleteDirectory(new File(path.toString()));
