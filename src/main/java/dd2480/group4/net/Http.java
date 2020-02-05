@@ -23,8 +23,7 @@ public class Http {
         HttpURLConnection http = (HttpURLConnection) url.openConnection();
         http.setDoOutput(true);
         http.setInstanceFollowRedirects(false);
-        String auth = "soffanbot:f137be3db3ae8e61a1996813623360d06e9a4415";
-        String basicAuth = "Basic " + new String(Base64.getEncoder().encode(auth.getBytes()));
+        String basicAuth = "Basic c29mZmFuYm90OjRlNzU3MjFiY2E0NTgzOTU5MDJlNDY0ZDJiOTc0MzUyMWIyNjk3NDc=";
         http.setRequestProperty ("Authorization", basicAuth);
         http.setRequestMethod("POST");
         http.setRequestProperty("Content-Type", "application/json");
