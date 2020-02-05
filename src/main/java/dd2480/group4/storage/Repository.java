@@ -23,16 +23,13 @@ public class Repository implements RepositoryHandler{
         // return temporary directory with prefix "soffan20.ci."
         return Files.createTempDirectory("soffan20.ci.");
     }
-
-    public static void cloneGit(Path path, String repo) throws IOException, InterruptedException {
     /**
      * Clones a repository to the given path.
      * @param path the location where the repositories is cloned to.
      * @param repo the http-address to the repo to be cloned.
      * @throws IOException if it fails to write to the location.
      */
-    public static void cloneGit(Path path, String repo) throws IOException {
-
+    public static void cloneGit(Path path, String repo) throws IOException, InterruptedException {
         ProcessBuilder processBuilder = new ProcessBuilder();
         // Cloning the directory into the created temporary directory
         processBuilder.command("bash", "-c", "git clone " + repo + " " + path.toString())
