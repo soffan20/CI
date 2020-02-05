@@ -6,6 +6,7 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.concurrent.TimeUnit;
 
 /**
  * A class for handling cloning of repositories.
@@ -23,6 +24,7 @@ public class Repository implements RepositoryHandler{
         return Files.createTempDirectory("soffan20.ci.");
     }
 
+    public static void cloneGit(Path path, String repo) throws IOException, InterruptedException {
     /**
      * Clones a repository to the given path.
      * @param path the location where the repositories is cloned to.
@@ -33,14 +35,13 @@ public class Repository implements RepositoryHandler{
 
         ProcessBuilder processBuilder = new ProcessBuilder();
         // Cloning the directory into the created temporary directory
-        processBuilder.command("bash", "-c", "git clone "+repo+" "+path.toString());
+        processBuilder.command("bash", "-c", "git clone " + repo + " " + path.toString())
+                .start()
+                .waitFor(5, TimeUnit.SECONDS);;
 
-        processBuilder.start();
-
-        processBuilder.command("bash", "-c", "git submodule update --init --recursive");
-
-        processBuilder.start();
-
+        processBuilder.command("bash", "-c", "git submodule update --init --recursive")
+                .start()
+                .waitFor(5, TimeUnit.SECONDS);;
     }
 
     /**
