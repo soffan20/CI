@@ -7,11 +7,10 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.IOException;
 
 /**
- * Defines the structure of a request to build the project
- * TODO: should model the repository at a given state (i.e. url, commit hash, branch, time and date)
+ * Json classes to get information from request from GitHub
  */
-@JsonIgnoreProperties(ignoreUnknown=true)
-public class BuildRequest {
+@JsonIgnoreProperties(ignoreUnknown = true)
+public class pushEvent {
 
     @JsonProperty("repository")
     public Repository repository;
@@ -20,11 +19,19 @@ public class BuildRequest {
     @JsonProperty("pusher")
     public Pusher pusher;
 
-    public static BuildRequest fromJson(String json) throws IOException {
+    /**
+     * @param json the json file to read
+     * @return a class representation of the json request.
+     * @throws IOException Fails to read the JSON.
+     */
+    public static pushEvent fromJson(String json) throws IOException {
         var mapper = new ObjectMapper();
-        return mapper.readValue(json, BuildRequest.class);
+        return mapper.readValue(json, pushEvent.class);
     }
 
+    /**
+     * The class represents the repository
+     */
     public static class Repository {
         @JsonProperty("name")
         String name;
@@ -34,7 +41,9 @@ public class BuildRequest {
         String url;
     }
 
-
+    /**
+     * The class represents the pusher of the commit.
+     */
     public static class Pusher {
         @JsonProperty("email")
         String email;
@@ -43,6 +52,9 @@ public class BuildRequest {
 
     }
 
+    /**
+     * The class represents the owner of the repository.
+     */
     public static class Owner {
         @JsonProperty("name")
         String name;
