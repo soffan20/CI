@@ -10,7 +10,7 @@ import java.net.URL;
  */
 public class Notification {
 
-    enum Status {
+    public enum Status {
         error,
         failure,
         pending,
