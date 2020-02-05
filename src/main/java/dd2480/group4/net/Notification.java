@@ -8,7 +8,7 @@ import java.net.URL;
  * A class for notifying the end user of the status of a build run
  * by setting the commit status on the upstream repository
  */
-public class Notification {
+public class Notification implements NotificationInterface {
 
     /**
      * @param pushEvent The information of the repository name, owner name and hashid where the message gets sent
@@ -17,6 +17,7 @@ public class Notification {
      * @return The Http-connection with the given URL where status and message is sent.
      * @throws IOException if it fails to send the message.
      */
+    @Override
     public HttpURLConnection setStatus(PushEvent pushEvent, Status status, String statusMessage) throws IOException {
         String repoName = pushEvent.repository.name;
         String ownerName = pushEvent.repository.owner.name;
