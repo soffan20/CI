@@ -4,6 +4,7 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.Base64;
 
 public class Http {
 
@@ -12,6 +13,9 @@ public class Http {
         HttpURLConnection http = (HttpURLConnection) url.openConnection();
         http.setDoOutput(true);
         http.setInstanceFollowRedirects(false);
+        String auth = "soffanbot:24755c979d0ddbadf9a2f48dba644adb09142c8f";
+        String basicAuth = "Basic " + new String(Base64.getEncoder().encode(auth.getBytes()));
+        http.setRequestProperty ("Authorization", basicAuth);
         http.setRequestMethod("POST");
         http.setRequestProperty("Content-Type", "application/json");
         http.setRequestProperty("charset", "utf-8");
