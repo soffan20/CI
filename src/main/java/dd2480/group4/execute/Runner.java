@@ -37,7 +37,7 @@ public class Runner implements Executor {
         if(execute.exitValue == 0){
             notification.setStatus(req, Status.SUCCESS, "The build succeeded");
         }else{
-            notification.setStatus(req, Status.FAILURE, "The build fail");
+            notification.setStatus(req, Status.FAILURE, "The build failed");
         }
 
         System.out.println("Deletes temporarily directory ");
