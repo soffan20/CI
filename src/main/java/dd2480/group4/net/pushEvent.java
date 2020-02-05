@@ -7,7 +7,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.IOException;
 
 /**
- * Defines the structure of a request to build the project
+ * Json classes to get information from request from GitHub
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class pushEvent {

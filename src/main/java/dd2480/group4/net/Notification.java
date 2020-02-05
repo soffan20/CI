@@ -27,8 +27,9 @@ public class Notification {
     }
 
     /**
-     * The status which is sent to github.
+     * Valid statuses for updating GitHub commit status
      */
+
     enum Status {
         ERROR,
         FAILURE,
