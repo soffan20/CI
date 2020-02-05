@@ -26,7 +26,7 @@ public class Notification {
         return Http.post(statusEndpoint, jsonBody);
     }
 
-    enum Status {
+    public enum Status {
         ERROR,
         FAILURE,
         PENDING,

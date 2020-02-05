@@ -34,11 +34,11 @@ public class pushEvent {
      */
     public static class Repository {
         @JsonProperty("name")
-        String name;
+        public String name;
         @JsonProperty("owner")
-        Owner owner;
+        public Owner owner;
         @JsonProperty("git_url")
-        String url;
+        public String url;
     }
 
     /**
@@ -46,9 +46,9 @@ public class pushEvent {
      */
     public static class Pusher {
         @JsonProperty("email")
-        String email;
+        public String email;
         @JsonProperty("name")
-        String name;
+        public String name;
 
     }
 
@@ -57,6 +57,6 @@ public class pushEvent {
      */
     public static class Owner {
         @JsonProperty("name")
-        String name;
+        public String name;
     }
 }
