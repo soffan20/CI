@@ -22,7 +22,7 @@ public class pushEvent {
     /**
      * @param json the json file to read
      * @return a class representation of the json request.
-     * @throws IOException
+     * @throws IOException Fails to read the JSON.
      */
     public static pushEvent fromJson(String json) throws IOException {
         var mapper = new ObjectMapper();

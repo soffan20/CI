@@ -30,7 +30,6 @@ public interface RepositoryHandler {
     /**
      * Deletes the directory at the given path.
      * @param path the path to the directory which is to be deleted.
-     * @throws IOException if if is not allowed to delete teh directory.
      */
     public static void deleteDirectory(Path path) throws IOException {
 
