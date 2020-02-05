@@ -1,10 +1,16 @@
 package dd2480.group4.execute;
 
-import dd2480.group4.net.BuildRequest;
+import dd2480.group4.net.PushEvent;
 
 import java.io.IOException;
 
+/**
+ * Interface for running a build.
+ */
 public interface Executor {
-
-    void runBuild(BuildRequest req) throws IOException, InterruptedException;
+    /**
+     * Runs the build
+     * @param req the request to be built.
+     */
+    void runBuild(PushEvent req) throws IOException, InterruptedException;
 }

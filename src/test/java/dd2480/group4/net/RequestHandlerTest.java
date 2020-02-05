@@ -11,15 +11,15 @@ import java.util.concurrent.ThreadLocalRandom;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-class RequestHandlerTest {
+class   RequestHandlerTest {
     @Test
     public void handle() throws Exception {
         // GIVEN
         var executor = new Executor() {
-            public BuildRequest request;
+            public PushEvent request;
 
             @Override
-            public void runBuild(BuildRequest req) {
+            public void runBuild(PushEvent req) {
                 this.request = req;
 
             }
@@ -30,7 +30,7 @@ class RequestHandlerTest {
         assertEquals(http.getResponseCode(), HttpStatus.OK_200, "response code should be OK");
 
         // WHEN
-        var response = Http.post(url, "{\"repository\": {\"git_url\": \"url\"}, \"pusher\" : {\"name\": \"foo\", \"email\": \"bar\"}, \"before\": \"commithash\"}");
+        var response = Http.post(url, "{\"repository\": {\"git_url\": \"url\"}, \"pusher\" : {\"name\": \"foo\", \"email\": \"bar\"}, \"after\": \"commithash\"}");
         var invalidJson = Http.post(url, "{\"");
 
         // THEN

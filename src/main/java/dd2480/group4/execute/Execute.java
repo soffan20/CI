@@ -24,9 +24,9 @@ public class Execute {
     public void runExecuteInstructions() throws IOException, InterruptedException {
         Path executePath = path.resolve("execute.sh");
         ProcessBuilder pb = new ProcessBuilder();
-        System.out.println("forsoker hitta filen " + executePath.toString());
+        System.out.println("Searching for file: " + executePath.toString());
         if(Files.exists(executePath)){
-            System.out.println("hittade filen och forsoker kora bash scriptet");
+            System.out.println("Found file: " + executePath.toString());
             pb.command("bash", "-c" , executePath.toString());
             Process process = pb.start();
             process.waitFor(5, TimeUnit.SECONDS);
@@ -34,7 +34,7 @@ public class Execute {
             stderr  =  IOUtils.toString(process.getErrorStream(), StandardCharsets.UTF_8);
             exitValue = process.exitValue();
         }else{
-            System.out.println("misslyckades att hitta filvage: " + executePath.toString());
+            System.out.println("Failed to find file: " + executePath.toString());
             exitValue =  -1;
         }
     }

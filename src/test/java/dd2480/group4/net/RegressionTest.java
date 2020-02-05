@@ -13,7 +13,7 @@ public class RegressionTest {
         String json = "{\"car\": \"volvo\", \"git_url\": \"url\", \"pusher\" : {\"name\": \"foo\", \"email\": \"bar\"}, \"after\": \"commithash\"}";
 
         // WHEN
-        var buildRequest = BuildRequest.fromJson(json);
+        var buildRequest = PushEvent.fromJson(json);
 
         // THEN
         assertTrue(true, "testing that class buildRequest can ignore properties");
