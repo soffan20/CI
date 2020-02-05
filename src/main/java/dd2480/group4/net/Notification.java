@@ -11,10 +11,10 @@ import java.net.URL;
 public class Notification {
 
     /**
-     * @param pushEvent The information of the repository name, owner name and hashid where the message gets sent
+     * @param pushEvent The json classes from request from GitHub
      * @param status The status sent.
      * @param statusMessage The message accompanying the status.
-     * @return The Http-connection with the given URL where status and message is sent.
+     * @return The Http-connection with the given URL with payload and body
      * @throws IOException if it fails to send the message.
      */
     public HttpURLConnection setStatus(pushEvent pushEvent, Status status, String statusMessage) throws IOException {
@@ -27,8 +27,9 @@ public class Notification {
     }
 
     /**
-     * The status which is sent to github.
+     * Valid statuses for updating GitHub commit status
      */
+
     enum Status {
         ERROR,
         FAILURE,

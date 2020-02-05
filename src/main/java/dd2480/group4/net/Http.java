@@ -6,14 +6,14 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 
 /**
- *
+ * Http requests used to update commit status on GitHub
  */
 public class Http {
 
     /**
      *
-     * @param url The url to send the object to
-     * @param json The json to send
+     * @param url The endpoint to send the POST request to
+     * @param json The body in the request in json format
      * @return Returns a HttpURLConnection with the given URL ready to send the JSON.
      * @throws IOException when it fails to send the message.
      */
