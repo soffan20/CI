@@ -11,10 +11,10 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 public class NotificationTest {
 
 
-    private class Foo extends HttpURLConnection implements HttpInterface{
+    private class FakeHttpUrlConnection extends HttpURLConnection implements HttpInterface{
         public URL url;
         public String json;
-        public Foo(URL url, String json){
+        public FakeHttpUrlConnection(URL url, String json){
             super(url);
             this.url = url;
             this.json = json;
@@ -22,7 +22,7 @@ public class NotificationTest {
 
         @Override
         public HttpURLConnection post(URL url, String json) throws IOException {
-            return new Foo(url, json);
+            return new FakeHttpUrlConnection(url, json);
         }
 
         @Override
@@ -43,7 +43,7 @@ public class NotificationTest {
 
     @Test
     public void setStatusTest() throws IOException{
-        Notification notification = new Notification(new Foo(null, null));
+        Notification notification = new Notification(new FakeHttpUrlConnection(null, null));
         PushEvent pe = new PushEvent();
         pe.repository = new PushEvent.Repository();
         pe.repository.name = "Repo-name";
@@ -55,10 +55,10 @@ public class NotificationTest {
         pe.pusher.name = "Pusher-name";
         pe.pusher.email = "a@mail.com";
 
-        Foo result = (Foo)notification.setStatus(pe, Notification.Status.PENDING, "foo");
+        FakeHttpUrlConnection result = (FakeHttpUrlConnection)notification.setStatus(pe, Notification.Status.PENDING, "foo");
         String json = result.json;
         URL url = result.url;
-        assertEquals("https://api.github.com/repos/" + "Repo-owner/" + "Repo-name/" + "statuses/" + 2, url.toString(), "The URL is incorrect");
+        assertEquals("https://api.github.com/repos/Repo-owner/Repo-name/statuses/2", url.toString(), "The URL is incorrect");
         String[] parts = json.split(" ");
         assertEquals("\"pending\",", parts[1], "The status message is incorrect");
         assertEquals("\"foo\",", parts[4], "The description is incorrect");
