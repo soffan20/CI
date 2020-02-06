@@ -1,5 +1,10 @@
 # CI Server
 
+**This is a Continuous Integration server that automatically runt tests on code that are pushed to GitHub.**
+
+The server runs jUnit tests triggered by a push-event on GitHub. The code is tested and the program generates documentation for the classes. 
+The test results are sent back to GitHub where the commit status gets updated to either Success or Failure. 
+
 The project is a Maven project using Java 13 and contains a jUnit test suite.
 Documentation is generated from the javadoc in the master branch and is
 published in the `gh-pages` branch in this repository.
