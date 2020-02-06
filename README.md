@@ -5,10 +5,12 @@
 The server runs jUnit tests triggered by a push-event on GitHub. The code is tested and the program generates documentation for the classes.
 The test results are sent back to GitHub where the commit status gets updated to either Success or Failure.
 
+When our server is notified of a push-event, we create a temporary folder to which we save the path. We clone the repository in question into that folder and look for an instruction file in the form of a bash file.
+We then run the bash instructions on the file. The bash file contains all the instructions
+necessary to run the tests. After we've run the file, we save the exit code to see if the tests failed or succeeded.
+The results are then sent back to github and the temporary folder is deleted.
+
 The project is a Maven project using Java 13 and contains a jUnit test suite.
-To run these jUnit tests, we have created a bash file called execute.sh in which we have instructions
-to compile the files and run the tests. After we have cloned the repository, we run this file as bash instructions.
-We have made tests for both the compilation and execution of the program to make sure that everything works as intended.
 Documentation is generated from the javadoc in the master branch and is
 published in the `gh-pages` branch in this repository.
 
