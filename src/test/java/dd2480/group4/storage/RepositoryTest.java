@@ -1,6 +1,5 @@
 package dd2480.group4.storage;
 
-import dd2480.group4.storage.Repository;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
@@ -8,7 +7,8 @@ import java.nio.file.DirectoryStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 
 public class RepositoryTest {
@@ -18,11 +18,12 @@ public class RepositoryTest {
 
         //GIVEN
         String repo = "https://github.com/soffan20/DummyTestRepo.git";
+        Repository repository = new Repository();
 
         //WHEN
-        var path = Repository.createDirectory(); //create directory
+        var path = repository.createDirectory(); //create directory
         DirectoryStream<Path> dirStream = Files.newDirectoryStream(path); //create directory stream for the path
-        Repository.cloneGit(path,repo); //clone the git repo
+        repository.cloneGit(path, repo); //clone the git repo
 
         //THEN
         assertTrue(Files.exists(path), "should be true if directory was created successfully");
@@ -30,10 +31,11 @@ public class RepositoryTest {
         assertTrue(Files.exists(path.resolve("execute.sh")), "should be true if git repo was cloned successfully");
 
         //WHEN
-        Repository.deleteDirectory(path);
+        repository.deleteDirectory(path);
 
         //THEN
         assertFalse(Files.exists(path), "should be false if directory was deleted successfully");
 
     }
+
 }
