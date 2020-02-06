@@ -10,6 +10,10 @@ import java.net.URL;
  */
 public class Notification implements NotificationInterface {
 
+    private HttpInterface httpInterface;
+    public Notification(HttpInterface httpinterface){this.httpInterface = httpinterface;}
+
+
     /**
      * @param pushEvent The information of the repository name, owner name and hashid where the message gets sent
      * @param status The status sent.
@@ -24,7 +28,7 @@ public class Notification implements NotificationInterface {
         String hashId = pushEvent.hashId;
         var statusEndpoint = new URL("https://api.github.com/repos/" + ownerName + "/" + repoName + "/statuses/" + hashId);
         String jsonBody = "{\"state\": \"" + status.toString().toLowerCase() + "\", \"description\" : \"" + statusMessage + "\", \"context\" :  \"soffan20/CI\"}";
-        return Http.post(statusEndpoint, jsonBody);
+        return httpInterface.post(statusEndpoint, jsonBody);
     }
 
     public enum Status {

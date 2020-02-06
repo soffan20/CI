@@ -9,7 +9,7 @@ import java.util.Base64;
 /**
  * Http requests used to update commit status on GitHub
  */
-public class Http {
+public class Http implements HttpInterface{
 
     /**
      *
@@ -18,7 +18,7 @@ public class Http {
      * @return Returns a HttpURLConnection with the given URL ready to send the JSON.
      * @throws IOException when it fails to send the message.
      */
-    public static HttpURLConnection post(URL url, String json) throws IOException {
+    public HttpURLConnection post(URL url, String json) throws IOException {
         byte[] data = json.getBytes();
         HttpURLConnection http = (HttpURLConnection) url.openConnection();
         http.setDoOutput(true);
