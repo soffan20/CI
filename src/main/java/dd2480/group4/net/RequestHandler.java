@@ -21,6 +21,7 @@ public class RequestHandler extends AbstractHandler {
 
     Executor executor;
     boolean async;
+    NotificationInterface notification;
 
     /**
      * Constructs a request handler, responsible for handling requests from jetty.
@@ -29,9 +30,10 @@ public class RequestHandler extends AbstractHandler {
      * @param executor the Executor responsible for running the build job
      * @param async    Specifies whether the handler runs the build executor in a separate thread
      */
-    public RequestHandler(Executor executor, boolean async) {
+    public RequestHandler(Executor executor, NotificationInterface notification, boolean async) {
         this.executor = executor;
         this.async = async;
+        this.notification = notification;
     }
 
     /**
@@ -39,9 +41,10 @@ public class RequestHandler extends AbstractHandler {
      * The request handler listens for webhooks and starts a new build with the given Executor
      * @param executor the Executor responsible for running the build job
      */
-    public RequestHandler(Executor executor) {
+    public RequestHandler(Executor executor, NotificationInterface notification) {
         this.executor = executor;
         this.async = true;
+        this.notification = notification;
     }
 
     /**
@@ -73,7 +76,7 @@ public class RequestHandler extends AbstractHandler {
                 new Thread(() ->
                 {
                     try {
-                        executor.runBuild(buildRequest);
+                        executor.runBuild(buildRequest, notification);
                     } catch (IOException e) {
                         e.printStackTrace();
                     } catch (InterruptedException e) {
@@ -83,7 +86,7 @@ public class RequestHandler extends AbstractHandler {
                 ).start();
 
             } else {
-                executor.runBuild(buildRequest);
+                executor.runBuild(buildRequest, notification);
             }
             response.setStatus(HttpStatus.OK_200);
         } catch (JsonEOFException e) {

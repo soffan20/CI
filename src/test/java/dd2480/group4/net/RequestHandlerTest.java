@@ -19,7 +19,7 @@ class   RequestHandlerTest {
             public PushEvent request;
 
             @Override
-            public void runBuild(PushEvent req) {
+            public void runBuild(PushEvent req, NotificationInterface notification) {
                 this.request = req;
 
             }
@@ -47,7 +47,7 @@ class   RequestHandlerTest {
         var rng = ThreadLocalRandom.current();
         var port = rng.nextInt(1000) + 8000;
         var server = new Server(port);
-        server.setHandler(new RequestHandler(executor, false));
+        server.setHandler(new RequestHandler(executor, new Notification(), false));
         try {
             server.start();
         } catch (Exception e) {
