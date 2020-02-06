@@ -12,6 +12,8 @@ import java.util.concurrent.ThreadLocalRandom;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class   RequestHandlerTest {
+
+
     @Test
     public void handle() throws Exception {
         // GIVEN
@@ -24,14 +26,15 @@ class   RequestHandlerTest {
 
             }
         };
+        HttpInterface httpInterface = new Http();
         var server = newServer(executor);
         var url = toUrl(server);
-        var http = Http.post(url, "{\"git_url\": \"url\", \"pusher\" : {\"name\": \"foo\", \"email\": \"bar\"}, \"after\": \"commithash\"}");
+        var http = httpInterface.post(url, "{\"git_url\": \"url\", \"pusher\" : {\"name\": \"foo\", \"email\": \"bar\"}, \"after\": \"commithash\"}");
         assertEquals(http.getResponseCode(), HttpStatus.OK_200, "response code should be OK");
 
         // WHEN
-        var response = Http.post(url, "{\"repository\": {\"git_url\": \"url\"}, \"pusher\" : {\"name\": \"foo\", \"email\": \"bar\"}, \"after\": \"commithash\"}");
-        var invalidJson = Http.post(url, "{\"");
+        var response = httpInterface.post(url, "{\"repository\": {\"git_url\": \"url\"}, \"pusher\" : {\"name\": \"foo\", \"email\": \"bar\"}, \"after\": \"commithash\"}");
+        var invalidJson = httpInterface.post(url, "{\"");
 
         // THEN
         assertEquals(HttpStatus.BAD_REQUEST_400, invalidJson.getResponseCode(), "response code should be 500 for invalid JSON");
@@ -47,7 +50,7 @@ class   RequestHandlerTest {
         var rng = ThreadLocalRandom.current();
         var port = rng.nextInt(1000) + 8000;
         var server = new Server(port);
-        server.setHandler(new RequestHandler(executor, new Notification(), false));
+        server.setHandler(new RequestHandler(executor, new Notification(new Http()), false));
         try {
             server.start();
         } catch (Exception e) {

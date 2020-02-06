@@ -1,6 +1,7 @@
 package dd2480.group4.execute;
 
 import dd2480.group4.net.Notification;
+import dd2480.group4.net.Http;
 import dd2480.group4.net.PushEvent;
 import dd2480.group4.storage.Repository;
 import org.junit.jupiter.api.Test;
@@ -41,7 +42,7 @@ class RunnerTest {
             }
 
         };
-        Notification notification = new Notification();
+        Notification notification = new Notification(new Http());
         PushEvent pe = getPushEvent();
         Path path = repository.createDirectory();
         repository.cloneGit(path, "noGitRepo");
@@ -70,7 +71,7 @@ class RunnerTest {
 
         Runner runner = new Runner(repository);
         repository.createDirectory();
-        Notification notification = new Notification();
+        Notification notification = new Notification(new Http());
         PushEvent pe = getPushEvent();
 
 
@@ -96,7 +97,7 @@ class RunnerTest {
 
         Runner runner = new Runner(repository);
         repository.createDirectory();
-        Notification notification = new Notification();
+        Notification notification = new Notification(new Http());
         PushEvent pe = getPushEvent();
 
         //WHEN
