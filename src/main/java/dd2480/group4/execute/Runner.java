@@ -35,7 +35,7 @@ public class Runner implements Executor {
         System.out.println("Searching for file: " + executePath.toString());
         if (Files.exists(executePath)) {
             System.out.println("Found file: " + executePath.toString());
-            pb.command("bash", "-c", executePath.toString());
+            pb.command("bash", "-c", executePath.toString()).directory(path.toFile());
             Process process = pb.start();
             process.waitFor(5, TimeUnit.SECONDS);
             System.out.println("stdout: " + IOUtils.toString(process.getInputStream(), StandardCharsets.UTF_8));
