@@ -11,12 +11,15 @@ import java.net.URL;
 public class Notification implements NotificationInterface {
 
     private HttpInterface httpInterface;
-    public Notification(HttpInterface httpinterface){this.httpInterface = httpinterface;}
+
+    public Notification(HttpInterface httpinterface) {
+        this.httpInterface = httpinterface;
+    }
 
 
     /**
-     * @param pushEvent The information of the repository name, owner name and hashid where the message gets sent
-     * @param status The status sent.
+     * @param pushEvent     The information of the repository name, owner name and hashid where the message gets sent
+     * @param status        The status sent.
      * @param statusMessage The message accompanying the status.
      * @return The Http-connection with the given URL where status and message is sent.
      * @throws IOException if it fails to send the message.

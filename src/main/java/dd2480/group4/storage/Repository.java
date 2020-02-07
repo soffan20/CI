@@ -30,7 +30,6 @@ public class Repository implements RepositoryHandler {
         return Files.createTempDirectory("soffan20.ci.");
     }
 
-
     /**
      * Clones a repository to the given path.
      *
@@ -39,8 +38,20 @@ public class Repository implements RepositoryHandler {
      * @throws IOException          if it fails to write to the location.
      * @throws InterruptedException if it fails to sleep.
      */
-
     public void cloneGit(Path path, String repo) throws IOException, InterruptedException {
+        cloneGit(path, repo, "master");
+    }
+
+    /**
+     * Clones a repository to the given path.
+     *
+     * @param path   the location where the repositories is cloned to.
+     * @param repo   the http-address to the repo to be cloned.
+     * @param hashId the commit hash to checkout
+     * @throws IOException          if it fails to write to the location.
+     * @throws InterruptedException if it fails to sleep.
+     */
+    public void cloneGit(Path path, String repo, String hashId) throws IOException, InterruptedException {
 
         ProcessBuilder processBuilder = new ProcessBuilder();
         // Cloning the directory into the created temporary directory
@@ -54,25 +65,31 @@ public class Repository implements RepositoryHandler {
             builder.append(line);
             builder.append(System.getProperty("line.separator"));
         }
-        builder.append(System.getProperty("line.separator"));
 
+        builder.append(System.getProperty("line.separator"));
         p.waitFor(5, TimeUnit.SECONDS);
 
         p = processBuilder.command("bash", "-c", "git submodule update --init --recursive").directory(path.toFile()).start();
 
         reader = new BufferedReader(new InputStreamReader(p.getErrorStream()));
 
-        while ( (line = reader.readLine()) != null) {
+        while ((line = reader.readLine()) != null) {
             builder.append(line);
             builder.append(System.getProperty("line.separator"));
         }
 
+        builder.append(System.getProperty("line.separator"));
         p.waitFor(5, TimeUnit.SECONDS);
 
-        String result = builder.toString();
+        p = processBuilder.command("bash", "-c", "git checkout " + hashId).directory(path.toFile()).start();
+        reader = new BufferedReader(new InputStreamReader(p.getErrorStream()));
 
-        System.out.println(result);
+        while ((line = reader.readLine()) != null) {
+            builder.append(line);
+            builder.append(System.getProperty("line.separator"));
+        }
 
+        System.out.println(builder.toString());
     }
 
     /**

@@ -1,7 +1,7 @@
 package dd2480.group4.execute;
 
-import dd2480.group4.net.Notification;
 import dd2480.group4.net.Http;
+import dd2480.group4.net.Notification;
 import dd2480.group4.net.PushEvent;
 import dd2480.group4.storage.Repository;
 import org.junit.jupiter.api.Test;
@@ -38,7 +38,7 @@ class RunnerTest {
         var repository = new Repository() {
 
             @Override
-            public void cloneGit(Path path, String repo) throws IOException, InterruptedException {
+            public void cloneGit(Path path, String repo, String hashId) throws IOException, InterruptedException {
             }
 
         };
@@ -61,7 +61,7 @@ class RunnerTest {
         var repository = new Repository() {
 
             @Override
-            public void cloneGit(Path path, String repo) throws IOException, InterruptedException {
+            public void cloneGit(Path path, String repo, String hashId) throws IOException, InterruptedException {
                 File execute = new File(Files.write(path.resolve("execute.sh"), "#!/bin/bash \n exit 0\n".getBytes()).toString());
                 execute.setExecutable(true);
 
@@ -88,7 +88,7 @@ class RunnerTest {
         var repository = new Repository() {
 
             @Override
-            public void cloneGit(Path path, String repo) throws IOException, InterruptedException {
+            public void cloneGit(Path path, String repo, String hashId) throws IOException, InterruptedException {
                 File execute = new File(Files.write(path.resolve("execute.sh"), "#!/bin/bash \n exit 1\n".getBytes()).toString());
                 execute.setExecutable(true);
 

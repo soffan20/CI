@@ -11,7 +11,7 @@ import java.util.concurrent.ThreadLocalRandom;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-class   RequestHandlerTest {
+class RequestHandlerTest {
 
 
     @Test

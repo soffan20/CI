@@ -42,9 +42,9 @@ public class Runner implements Executor {
             System.out.println("stderr: " + IOUtils.toString(process.getErrorStream(), StandardCharsets.UTF_8));
 
             return process.exitValue();
-        }else{
+        } else {
             System.out.println("Failed to find file: " + executePath.toString());
-            return  -1;
+            return -1;
         }
     }
 
@@ -59,14 +59,14 @@ public class Runner implements Executor {
         Path path = repository.createDirectory();
         System.out.println("Temporarily directory name: " + path.toString());
         System.out.println("Cloning github repository");
-        repository.cloneGit(path, req.repository.url);
+        repository.cloneGit(path, req.repository.url, req.hashId);
         System.out.println("Cloned github repository name: " + req.repository.name);
         System.out.println("Trying to execute execute.sh");
         exitValue = runExecuteInstructions(path);
         System.out.println("Sends notification status to github");
-        if(exitValue== 0){
+        if (exitValue == 0) {
             notification.setStatus(req, Status.SUCCESS, "The build succeeded");
-        }else{
+        } else {
             notification.setStatus(req, Status.FAILURE, "The build failed");
         }
 
