@@ -11,6 +11,7 @@ import java.io.IOException;
 public interface Executor {
     /**
      * Runs the build
+     *
      * @param req the request to be built.
      */
     void runBuild(PushEvent req, NotificationInterface notification) throws IOException, InterruptedException;

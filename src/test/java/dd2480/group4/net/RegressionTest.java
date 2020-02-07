@@ -1,9 +1,10 @@
 package dd2480.group4.net;
 
 import org.junit.jupiter.api.Test;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.io.IOException;
+
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class RegressionTest {
 
