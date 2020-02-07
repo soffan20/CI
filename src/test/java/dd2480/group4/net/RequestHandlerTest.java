@@ -42,7 +42,7 @@ class RequestHandlerTest {
         assertEquals("foo", executor.request.pusher.name, "Expected json name to be set to foo");
         assertEquals("bar", executor.request.pusher.email, "email should be bar");
         assertEquals("commithash", executor.request.hashId, "hashId should be commithash");
-        assertEquals("url", executor.request.repository.url, "url should be url");
+        assertEquals("foo", executor.request.repository.url, "url should be url");
         server.stop();
     }
 
