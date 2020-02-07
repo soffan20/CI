@@ -1,18 +1,20 @@
 # CI Server
 
-**This is a Continuous Integration server that automatically runt tests on code that are pushed to GitHub.**
+**This is a Continuous Integration server that automatically compile and run tests on code that are pushed to GitHub.**
 
-The server runs jUnit tests triggered by a push-event on GitHub. The code is tested and the program generates documentation for the classes.
-The test results are sent back to GitHub where the commit status gets updated to either Success or Failure.
+The server is unit tested using jUnit and uses javadoc for documentation. The documentation is automatically 
+updated and deployed to GitHub Pages on every commit or merge to master.
 
-When our server is notified of a push-event, we create a temporary folder to which we save the path. We clone the repository in question into that folder and look for an instruction file in the form of a bash file.
+When the server is notified of a push-event. We clone the repository in question into 
+a temporary folder and then tries to execute a bash file called `executes.sh` which should contain the steps for compiling and testing
+the project.
 We then run the bash instructions on the file. The bash file contains all the instructions
 necessary to run the tests. After we've run the file, we save the exit code to see if the tests failed or succeeded.
-The results are then sent back to github and the temporary folder is deleted.
+The commit status of a commit gets updated to Success or Failure depending on the exit on the bash process. 
 
 The project is a Maven project using Java 13 and contains a jUnit test suite.
 Documentation is generated from the javadoc in the master branch and is
-published in the `gh-pages` branch in this repository.
+published in the `gh-pages` branch in this repository. 
 
 ## Documentation
 Our documentation can be found at the following URL:
